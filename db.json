@@ -1,0 +1,16 @@
+{
+    "loginDetails": [
+      {
+        "id": "1",
+        "userName": "admin",
+        "password": "admin",
+        "type": "admin"
+      },
+      {
+        "id": "2",
+        "userName": "user",
+        "password": "password",
+        "type": "user"
+      }
+    ]
+}   
