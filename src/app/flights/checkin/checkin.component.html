@@ -1,0 +1,70 @@
+<div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+    <div fxFlex=60>
+        <mat-card>
+            <mat-card-title>Welcome to {{flight.airline}} airlines</mat-card-title>
+            <br>
+            <mat-card-title>Departure Details</mat-card-title>
+        <mat-card-content>
+          <mat-card-subtitle> Departure City : {{flight.departureStation}}</mat-card-subtitle>
+          <mat-card-subtitle> Departure Time: {{flight.departureDate | date:"medium"}}</mat-card-subtitle>  
+        </mat-card-content>
+       
+        <mat-card-title>Arrival Details</mat-card-title>
+        <mat-card-content>
+          <mat-card-subtitle>Arrival City : {{flight.arrivalStation}}</mat-card-subtitle>
+          <mat-card-subtitle>Arrival Time : {{flight.arrivalDate}}</mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>  
+    </div>
+    <div fxFlex="40" class="seat-map" [class.disabled]="!enableSeatmap">
+        <app-seatmap [class.disabled]="!enableSeatmap"></app-seatmap>
+    </div>
+</div>
+<div>
+ 
+    <div mat="mat-elevation-z2" style="margin-top: 50px;" >
+        <mat-table [dataSource]="listPassenger" matSort>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 0px;align-items: center;justify-content: center;">Name</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.name }}</mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="passportNumber">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+            style="padding: 0px;align-items: center;justify-content: center;" >Passport Number</mat-header-cell
+            >
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.passportNumber }}</mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="checkinStatus">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">CheckInStatus</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.checkinStatus }}</mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="passengerType">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">Passenger Type</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{
+              element.passengerType
+            }}</mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="seatNumber">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">SeatNumber</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{
+              element.seatNumber
+            }}</mat-cell>
+          </ng-container>
+           
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;"></mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">
+              <button class="btn btn-primary" (click)="onOffloadPassenger(element)">{{element.seatNumber != '-' ? 'offload': 'checkIn'}}
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayPassengerColumns">
+          </mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayPassengerColumns"> </mat-row>
+        </mat-table>
+        </div> 
+</div>

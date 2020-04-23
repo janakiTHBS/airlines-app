@@ -1,112 +1,111 @@
 import { Injectable } from '@angular/core';
-import { Flight } from '../flight/flight.model';
 import { Passenger } from './passenger.model';
-import { FlightService } from '../flight/flight.service';
+import { HttpClient } from '@angular/common/http';
+import * as environment from "../../environments/environment";
+import { FlightService } from '../flights/flight.service';
+import { Flight } from '../flights/flight.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import * as fromApp from "../app.reducer";
-import { FormGroup, FormControl } from '@angular/forms';
-import { SeatmapService } from '../seatmap/seatmap.service';
-import { map } from "rxjs/operators";
-import * as flightActions from '../flight/store/flight.actions';
+import * as fromApp from '../app.reducer';
+import * as flightActions from '../flights/store/flight.actions';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CheckinStatus } from '../flights/enums/CheckinStatus.enum';
 @Injectable({
   providedIn: 'root'
 })
 export class PassengerService {
-  flight: Flight;
-  passengerList;
-  constructor(
-    private flightService: FlightService,
-    private store: Store<fromApp.appState>,
-    private seatService: SeatmapService
-  ) {}
+  flight:any;
+  disablePassportField:boolean;
+  flights:Observable<Flight[]>;
+  constructor(private http:HttpClient,
+    private flightService:FlightService,
+    private store:Store<fromApp.appState>,
+    private formBuilder:FormBuilder) {
+     }  
+  passengerForm:FormGroup = this.formBuilder.group({
+        firstName: ['', [Validators.required,
+        Validators.minLength(3), Validators.pattern('^[a-zA-z ]+$')]],
+        dob: [''],
+        passportNumber: ['', [Validators.maxLength(7)]],
+        address: this.formBuilder.group({
+          city: ['', [Validators.pattern('^[a-zA-z]+$')]],
+          state: ['', [Validators.pattern('^[a-zA-z]+$')]],
+          postalCode:['', [Validators.maxLength(6), Validators.pattern('^[0-9]+$')]]
+        })
+      });
+  
 
-  passengerForm: FormGroup = new FormGroup({
-    $key: new FormControl(null),
-    id: new FormControl(null),
-    name: new FormControl(null),
-    service: new FormControl(["wheel chair"])
-    //seatNumber: new FormControl(null)
-  });
 
-  ngOnInit() {
-    this.flight = this.flightService.getUpdatedFlight();
-    console.log(this.flight);
-  }
+populateForm(passenger:Passenger) {
+  console.log(passenger);
+  const dateOfBirth=new Date(passenger.DOB);
+  console.log(dateOfBirth);
+  this.passengerForm.patchValue({
+    firstName:passenger.name,
+    passportNumber:passenger.passportNumber,
+    dob:dateOfBirth,
+    address:{
+      city:passenger.address.city,
+      state:passenger.address.state,
+      postalCode:passenger.address.postalCode
+    } 
+   });
+}
 
-  initializeFormGroup() {
-    this.passengerForm.setValue({
-      $key: null,
-      id: "",
-      name: "",
-      service: ""
-      //seatNumber: ""
-    });
-  }
-  getPassengers() {
-    let passengers: Passenger[] = this.flightService.getUpdatedFlight()
-      .passengers;
-    this.passengerList = Object.assign({}, ...passengers);
-    console.log(this.passengerList);
-    return passengers;
-  }
+addPassenger(passenger,fid:number){
+  if (passenger) {
+    const updatedPassenger: Passenger = {
+      name: passenger.firstName,
+      passportNumber: passenger.passportNumber,
+      DOB: passenger.dob,
+      address: passenger.address,
+      checkinStatus: 'NC',
+      passengerType: 'GN',
+      seatNumber: '-',
+      ancillaryServicesList: [],
+      mealPreference: [],
+      inFlightShopReqList: []
+    };
 
-  insertPassenger(passenger) {
-    const pass = new Passenger(
-      passenger.id,
-      passenger.name,
-      this.seatService.getSelectedSeat(),
-      passenger.service
-    );
-    console.log(pass);
     this.store.dispatch(
       new flightActions.AddPassenger({
-        index: +this.flight.id,
-        passenger: pass
+        index:fid-1,
+        passenger: updatedPassenger
       })
-    );
-  }
+    ); 
+ 
+  
+}
+}
 
-  updatePassenger(fid, pid, passenger) {
-    this.store.dispatch(
-      new flightActions.UpdatePassenger({
-        fid: fid,
-        pid: pid,
-        passenger: passenger
-      })
-    );
-  }
+updatePassenger(fid:number,passenger){
+  const updateFlight=this.flightService.getFlight(fid);
+  const updatePassenger=updateFlight.passengers.find((passenger,index)=>{
+    return passenger.passportNumber==passenger.passportNumber;
+  });
+  if(fid && passenger){
+  const updatedPassenger: Passenger = {
+    name: passenger.firstName,
+    passportNumber: passenger.passportNumber,
+    DOB: passenger.dob,
+    address: passenger.address,
+    checkinStatus: updatePassenger.checkinStatus,
+    passengerType: updatePassenger.passengerType,
+    seatNumber: updatePassenger.seatNumber,
+    ancillaryServicesList: updatePassenger.ancillaryServicesList,
+    mealPreference: updatePassenger.mealPreference,
+    inFlightShopReqList:updatePassenger.inFlightShopReqList
+  };
+  this.store.dispatch(new flightActions.UpdatePassenger(
+    {
+      fid:fid-1,
+      pid:passenger.passportNumber,
+      passenger:updatedPassenger
+    }));
+}
 
-  populateForm(passenger, fid) {
-    let editFlight: Flight;
-    this.store
-      .select("flights")
-      .pipe(
-        map(flightState => {
-          return flightState.flights;
-        })
-      )
-      .subscribe(flights => {
-        editFlight = flights.find((flight, index) => {
-          return flight.id === fid;
-        });
-      });
-    let service = null;
-    console.log(editFlight);
-    if (editFlight.services) {
-      console.log(editFlight.services);
-      service = editFlight.services.find((service, index) => {
-        console.log(service);
-        console.log(passenger.service);
-        return service == passenger.service;
-      });
-      console.log(service);
-    }
-    this.passengerForm.setValue({
-      $key: "update",
-      id: passenger.id,
-      name: passenger.name,
-      service: editFlight.services
-      //seatNumber: passenger.seatNumber
-    });
-  }
+}
+
+
 }

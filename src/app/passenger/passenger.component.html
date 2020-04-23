@@ -1,58 +1,57 @@
-<div class="row">
-    <div class="col-md-12">
-      <form
-        [formGroup]="passengerService.passengerForm"
-        (ngSubmit)="onSubmit()"
-        class="normal-form"
-      >
-        <mat-grid-list cols="1" rowHeight="600px">
-          <mat-grid-tile>
-            <div class="controles-container">
-              <input type="hidden" formControlName="$key" />
-              <mat-form-field>
-                <input
-                  formControlName="id"
-                  matInput
-                  placeholder="Passport number"
-                />
-                <mat-error>This field is mandatory</mat-error>
-              </mat-form-field>
-              <br>
-              <mat-form-field>
-                <input formControlName="name" matInput placeholder="Name" />
-                <mat-error>This is field is mandatory</mat-error>
-              </mat-form-field>
-              <br>
-              <mat-form-field>
-                <mat-label>Choose Service:</mat-label>
-                <mat-select formControlName="service">
-                  <mat-option
-                    *ngFor="let service of updatedFlight.services"
-                    [value]="service"
-                    >{{ service }}</mat-option
-                  >
-                </mat-select>
-              </mat-form-field>
-             <br>
-              <div>Choose seat :</div>
-              
-  <div style="margin:auto;margin-top:2%">
-    <app-seatmap></app-seatmap>
-  </div>
-              <div class="button-row" style="display: flex;align-items: center;justify-content: center;">
-                <button mat-raised-button color="primary">Submit</button>
-                <button mat-raised-button color="warn" (click)="onClear()">
-                  Clear
-                </button>
-              </div>
+<form [formGroup]="passengerService.passengerForm">
+    <div>
+        <mat-form-field>
+            <mat-label>FirstName</mat-label>
+            <input formControlName='firstName' maxlength="20" matInput type="text" name="firstName">
+            <mat-error *ngIf='passengerService.passengerForm.get("firstName").touched && !passengerService.passengerForm.get("firstName").valid'>Please Enter Valid
+                Name</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Date Of Birth</mat-label>
+            <input formControlName='dob' matInput [matDatepicker]="picker" name='dob'>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Passport Number</mat-label>
+            <input formControlName='passportNumber' maxlength="7" matInput type="text" placeholder="EX:G1234PK"
+            [disabled]="editMode" name="passportNumber">
+            <mat-error *ngIf='passengerService.passengerForm.get("passportNumber").touched && !passengerService.passengerForm.get("passportNumber").valid'>Please
+                Enter a Valid Passport Number</mat-error>
+        </mat-form-field>
+        <div formGroupName='address' class="pax-address">
+            <mat-form-field>
+                <mat-label>City</mat-label>
+                <input formControlName='city' matInput type="text" placeholder="EX:Banglore" name="city">
+                <mat-error
+                    *ngIf='passengerService.passengerForm.get("address").get("city").touched && !passengerService.passengerForm.get("address").get("city").valid'>
+                    Please Enter a Valid city</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>State</mat-label>
+                <input formControlName='state' matInput type="text" placeholder="EX:Karnataka" name="state">
+                <mat-error
+                    *ngIf='passengerService.passengerForm.get("address").get("state").touched && !passengerService.passengerForm.get("address").get("state").valid'>
+                    Please Enter a Valid State</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Postal Code</mat-label>
+                <input formControlName='postalCode' #postalCode matInput type="text" maxlength="6"
+                    placeholder="EX:560059" name="postalCode">
+                <mat-hint align="end">{{postalCode.value.length}} / 6</mat-hint>
+                <mat-error
+                    *ngIf='passengerService.passengerForm.get("address").get("postalCode").touched && !passengerService.passengerForm.get("address").get("postalCode").valid'>
+                    Please Enter a Valid Postal Code</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button color='warn' (click)='onCancel()'>Cancel</button>
+           <!--- <div class="ctrl-btn" *ngIf='!isPaxUpdate'>-->
+               <div class="ctrl-btn"></div>
+                <button [disabled]='!passengerService.passengerForm.valid' mat-raised-button color='primary' (click)='onSave()'>{{!editMode ? 'save':'update'}}</button>
             </div>
-          </mat-grid-tile>
-        </mat-grid-list>
-      </form>
+          <!---  <div class="ctrl-btn" *ngIf='isPaxUpdate'>
+                <button [disabled]='!paxForm.dirty || !paxForm.valid' mat-raised-button color='primary' (click)='onUpdate()'>Update</button>
+            </div>-->
     </div>
-  
-    <!-- <div class="col-md-5">
-      <router-outlet></router-outlet>
-    </div> -->
-  </div>
-  
+</form>

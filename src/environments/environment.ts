@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl:"http://localhost:3000/",
+  apiUrl:"http://localhost:3001/",
+  flightsUrl :'/assets/data/flights.json',
   firebaseAPIKey: "AIzaSyCm8S4QQJpobo2dGgQMQCD3yRsPXuj8_ew",
   firebaseConfig: {
     apiKey: "AIzaSyCvIHQEmSo1BoP1kQsHm01L3jozkULIa-k",

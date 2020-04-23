@@ -1,11 +1,11 @@
 import { ActionReducerMap } from "@ngrx/store";
-import * as FlightReducer from "./flight/store/flight.reducer";
-import * as SeatReducer from "./seatmap/store/seat.reducer";
+import * as Auth from './auth/store/user.reducer';
+import * as Flight from './flights/store/flight.reducer';
 export interface appState {
-  flights: FlightReducer.State;
-  seats: SeatReducer.State;
+ auth:Auth.AuthState,
+ flights:Flight.State,
 }
 export const appReducer: ActionReducerMap<appState> = {
-  flights: FlightReducer.FlightState,
-  seats: SeatReducer.SeatState
+  auth:Auth.AuthReducer,
+  flights:Flight.FlightState
 };

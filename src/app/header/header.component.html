@@ -1,1 +1,15 @@
-<p>header works!</p>
+<div *ngIf="loggedIn">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav navbar-right">
+        <span> username : {{loginUserName}}</span>
+        <span> role : {{userRole}} </span>
+        <span><button (click)="onLogout()">Logout</button></span>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+
+  

@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from "firebase/app";
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import * as environemnt from "../../environments/environment";
 import { HttpClient } from '@angular/common/http';
+
+export interface UserLogInStatus {
+  userName: string;
+  role: string;
+  loginStatus: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +20,7 @@ export class AuthService {
   private normalUser:any;
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
+  loginSucessful = new BehaviorSubject<UserLogInStatus>(null);
   constructor(private _firebaseAuth: AngularFireAuth,private router: Router,private http:HttpClient) {
     this.user = this._firebaseAuth.authState;
     this.user.subscribe(user => {
@@ -27,7 +35,8 @@ export class AuthService {
 
    fetchUserDetails(username,password){
     this.normalUser=this.http.get(environemnt.environment.apiUrl+"loginDetails?userName="+username+"&password="+password).toPromise();
-   if(this.normalUser!=null){
+    console.log(this.normalUser);
+    if(this.normalUser!=null){
      this.normalUserLoggedIn=true;
    }
    return this.normalUser;

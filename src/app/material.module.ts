@@ -12,6 +12,10 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatSelectChange, MatSelectModule } from "@angular/material/select";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatCardModule} from '@angular/material/card';
 const materials = [
   MatListModule,
   MatGridListModule,
@@ -25,7 +29,11 @@ const materials = [
   MatDialogModule,
   MatSelectModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatCardModule
 ];
 @NgModule({
   imports: [materials],

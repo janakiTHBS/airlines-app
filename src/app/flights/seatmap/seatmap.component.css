@@ -1,0 +1,32 @@
+.seat-container .mat-grid-tile {
+   background-color: #dd8410;
+  }
+
+
+  .my-grid-tile{
+    padding: 1px,1px !important;
+    margin: 1px,1px !important;
+  }
+  
+  .seat-container .mat-grid-list {
+    height: 53vh;
+    margin: 0.1em 0em;
+  }
+  
+  button {
+    background-color: #7ed2e7;
+    width: 1em;
+  }
+  
+  .checked-in {
+    background-color: #b716c5;
+  }
+  
+  .wheel-chair {
+    background-color: #dd8410;
+  }
+  
+  .infant-associated {
+    background-color: #a5ff50;
+  }
+  /*# sourceMappingURL=seat-map.component.css.map */

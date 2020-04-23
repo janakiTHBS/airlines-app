@@ -1,0 +1,106 @@
+<div class="container">
+ <div *ngIf="isAdminLogged"> 
+  <div class="row">
+      <div class="col-xs-12">
+        <table>
+          <tr>
+            <th>Flight No</th>
+            <th>Airline</th>
+            <th>Departure Station</th>
+            <th>Arrival Station</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+          </tr>
+          <tr>
+            <td>{{flight.flightNo}}</td>
+            <td>{{ flight.airline }}</td>
+            <td>{{ flight.departureStation }}</td>
+            <td>{{ flight.arrivalStation }}</td>
+            <td>{{ flight.departureDate | date:"medium" }}</td>
+            <td>{{ flight.arrivalDate | date:"medium"}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div style="margin-top: 1%;margin-bottom: 5%">
+    <button mat-raised-button style="background-color: #f37638;color: white;float: right;" (click)="onAddPassenger()">
+      <mat-icon>add</mat-icon>Add Passenger
+    </button>
+    </div>
+  <div mat="mat-elevation-z8" style="margin-top: 50px;" >
+  <mat-table [dataSource]="listPassenger" matSort>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 0px;align-items: center;justify-content: center;">Name</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="passportNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+      style="padding: 0px;align-items: center;justify-content: center;" >Passport Number</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.passportNumber }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="checkinStatus">
+      <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">CheckInStatus</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.checkinStatus }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="passengerType">
+      <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">Passenger Type</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{
+        element.passengerType
+      }}</mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="seatNumber">
+      <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">SeatNumber</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{
+        element.seatNumber
+      }}</mat-cell>
+    </ng-container>
+     
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;"></mat-header-cell>
+      <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">
+        <button mat-icon-button (click)="onEditPassenger(element)">
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayPassengerColumns">
+    </mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayPassengerColumns"> </mat-row>
+  </mat-table>
+  </div>
+  </div>
+
+  <div *ngIf="!isAdminLogged">
+  <div class="row">
+    <mat-card class="flight-details-card">
+        <mat-card-title>Welcome to {{flight.airline}} airlines</mat-card-title>
+        <br>
+        <mat-card-title>Departure Details</mat-card-title>
+    <mat-card-content>
+      <mat-card-subtitle> Departure City : {{flight.departureStation}}</mat-card-subtitle>
+      <mat-card-subtitle> Departure Time: {{flight.departureDate | date:"medium"}}</mat-card-subtitle>  
+    </mat-card-content>
+   
+    <mat-card-title>Arrival Details</mat-card-title>
+    <mat-card-content>
+      <mat-card-subtitle>Arrival City : {{flight.arrivalStation}}</mat-card-subtitle>
+      <mat-card-subtitle>Arrival Time : {{flight.arrivalDate}}</mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class="btn btn-primary" (click)="onCheckIn()">CheckIn</button>
+      <button class="btn btn-primary">InFlight</button>
+    </mat-card-actions>
+  </mat-card>
+  
+  </div>
+
+  </div>
+  </div>    
