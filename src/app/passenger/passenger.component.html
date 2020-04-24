@@ -48,7 +48,7 @@
             <button mat-raised-button color='warn' (click)='onCancel()'>Cancel</button>
            <!--- <div class="ctrl-btn" *ngIf='!isPaxUpdate'>-->
                <div class="ctrl-btn"></div>
-                <button [disabled]='!passengerService.passengerForm.valid' mat-raised-button color='primary' (click)='onSave()'>{{!editMode ? 'save':'update'}}</button>
+                <button [disabled]='!passengerService.passengerForm.valid' mat-raised-button color='primary' (click)='onSave()' style="background-color: #4c4cb3;color: white;">{{!editMode ? 'Save':'Update'}}</button>
             </div>
           <!---  <div class="ctrl-btn" *ngIf='isPaxUpdate'>
                 <button [disabled]='!paxForm.dirty || !paxForm.valid' mat-raised-button color='primary' (click)='onUpdate()'>Update</button>

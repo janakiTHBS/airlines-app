@@ -17,3 +17,7 @@ mat-header-cell {
     align-items: center;
     justify-content: center;
   }
+  .buttoncolor{
+    background-color: #337ab7;
+    color: white;
+}

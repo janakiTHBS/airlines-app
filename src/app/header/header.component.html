@@ -1,10 +1,17 @@
 <div *ngIf="loggedIn">
   <nav class="navbar navbar-inverse navbar-fixed-top">
+    <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> -->
     <div class="container-fluid">
-      <ul class="nav navbar-nav navbar-right">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" style="margin-top: 8px;font-size: 33px;">home</mat-icon>
+      <ul class="nav navbar-nav navbar-right marginalign">
+        <!-- <span><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon></span> -->
         <span> username : {{loginUserName}}</span>
         <span> role : {{userRole}} </span>
-        <span><button (click)="onLogout()">Logout</button></span>
+        <span></span>&nbsp; 
+        <span>
+        <button mat-raised-button color='primary' (click)="onLogout()"  type="submit" style="background-color:#337ab7;color:white" class="buttoncolor">Logout</button>
+        </span>
+        <!-- <span><button (click)="onLogout()">Logout</button></span> -->
       </ul>
     </div>
   </nav>

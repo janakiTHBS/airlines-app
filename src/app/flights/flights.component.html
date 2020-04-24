@@ -1,5 +1,5 @@
 <div class="mat-elevation-z50" *ngIf="isAdminLogged">
-  <mat-table [dataSource]="listFlight" matSort style="margin-top: 2%;">
+  <mat-table [dataSource]="listFlight" matSort style="margin-top: 5%;margin-left: 2%;margin-right: 2%;">
       <ng-container matColumnDef="Airline">
         <mat-header-cell *matHeaderCellDef mat-sort-header pstyle="padding: 0px;align-items: center;justify-content: center;"> Airline</mat-header-cell>
         <mat-cell *matCellDef="let element" style="cursor: pointer;padding: 0px;align-items: center;justify-content: center;">{{ element.airline}}</mat-cell>
@@ -37,9 +37,9 @@
     <mat-paginator [pageSizeOptions]="[9,18]" showFirstLastButtons></mat-paginator>
   </div>
 
-  <div *ngIf="!isAdminLogged" class="container">
+  <div *ngIf="!isAdminLogged" class="container" style="margin-top: 5%;">
     <h2>Welcome To Departure Control System</h2>
-    <h4><i>Checkin made easy</i></h4>
+    <h2>Checkin made easy</h2>
 <div class="flight-search-form">
     <form [formGroup]="flightSearchForm" (ngSubmit)="onSearch()">
         <div class="form-group">
@@ -51,12 +51,12 @@
                     name="from"
                     formControlName="departureStation">
                     <mat-error *ngIf='f.departureStation.touched && !f.departureStation.valid'>invalid departurestation</mat-error>
-                </mat-form-field>
+                </mat-form-field><br/>
                 <mat-form-field>
                     <input matInput  placeholder="To" name="to"
                         formControlName="arrivalStation">
                     <mat-error *ngIf='flightSearchForm.get("arrivalStation").touched  && !flightSearchForm.get("arrivalStation").valid'>invalid arrivalstation</mat-error>
-                </mat-form-field>
+                </mat-form-field><br/>
                 <mat-form-field>
                     <input matInput [matDatepicker]="picker" placeholder="Departure Date"
                         name='departureDate' formControlName="departureDate">
@@ -66,7 +66,7 @@
                 </mat-form-field>
             </div>
         </div>
-        <button mat-raised-button color='primary' [disabled]="!flightSearchForm.valid" type="submit">Search</button>
+        <button mat-raised-button color='primary' [disabled]="!flightSearchForm.valid" type="submit" style="background-color:#337ab7;color:white" class="buttoncolor">Search</button>
     </form>
 </div>
     <div *ngIf="!isLoading && noResults">

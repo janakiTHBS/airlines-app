@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "airlines-app"
+  "defaultProject": "airlines-app",
+  "cli": {
+    "analytics": false
+  }
 }

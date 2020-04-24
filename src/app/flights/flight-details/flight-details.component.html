@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" >
  <div *ngIf="isAdminLogged"> 
   <div class="row">
       <div class="col-xs-12">
@@ -79,7 +79,51 @@
   </div>
 
   <div *ngIf="!isAdminLogged">
-  <div class="row">
+    <div *ngIf="loggedIn">
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> -->
+        <div class="container-fluid">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" style="margin-top: 8px;font-size: 33px;">home</mat-icon>
+          <ul class="nav navbar-nav navbar-right marginalign">
+            <!-- <span><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon></span> -->
+            <span> username : {{loginUserName}}</span>
+            <span> role : {{userRole}} </span>
+            <span></span>&nbsp; 
+            <span>
+            <button mat-raised-button color='primary' (click)="onLogout()"  type="submit" style="background-color:#337ab7;color:white" class="buttoncolor">Logout</button>
+            </span>
+            <!-- <span><button (click)="onLogout()">Logout</button></span> -->
+          </ul>
+        </div>
+      </nav>
+    </div>
+    
+    
+    
+      
+    <div className = "row" style="display: flex;align-items: center;justify-content: center;margin-top: 17%;">
+      <div className = "col-md-6 col-sm-6" style="margin-right: 120px;" >
+          <div onClick = {this.props.onCheckinClick}>
+              <div>
+                  <img height="200px" style="cursor: pointer;margin-top: -14%;"
+                  alt="Checkin Operations" (click)="onCheckIn()"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWZK6hL3LvQgHlXN0aolSEG60t2jTsyFCcPzX1EggvKUD6-m77&s"/>
+              </div>
+              <div style="margin-left: 20%;margin-top: 10%;">Checkin Operations</div>
+          </div>
+      </div>
+      <div className = "col-md-6 col-sm-6">
+          <div onClick={this.props.onInFlightClick}>
+              <div>
+                  <img height="200px"
+                  alt="In-Flight Operations"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOiE1oUcgX93KXVIRkKyftNCWMET9nkRPPlE9d-Z91sFAEB-yG&s"/>
+              </div>
+             <div style="margin-left: 26%;">In-Flight Operations</div> 
+          </div>
+      </div>
+  </div>
+  <!-- <div class="row">
     <mat-card class="flight-details-card">
         <mat-card-title>Welcome to {{flight.airline}} airlines</mat-card-title>
         <br>
@@ -95,12 +139,20 @@
       <mat-card-subtitle>Arrival Time : {{flight.arrivalDate}}</mat-card-subtitle>
     </mat-card-content>
     <mat-card-actions>
-      <button class="btn btn-primary" (click)="onCheckIn()">CheckIn</button>
+      <button class="btn btn-primary" (click)="onCheckIn()">CheckIn123</button>
       <button class="btn btn-primary">InFlight</button>
     </mat-card-actions>
   </mat-card>
+  <div>
+  <div>
+    <img height="200px"
+    alt="Checkin Operations"
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWZK6hL3LvQgHlXN0aolSEG60t2jTsyFCcPzX1EggvKUD6-m77&s"/>
+</div>
+Checkin Operations
+</div>
   
-  </div>
+  </div> -->
 
   </div>
   </div>    
