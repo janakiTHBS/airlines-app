@@ -42,21 +42,32 @@ export function FlightState(
           passengers.push(passenger);
         }
       });
-      console.log(passengers);
-
       const updatedPsgInFlight = {
         ...updateFlight,
         passengers: [...passengers]
       };
-
-      console.log(updatedPsgInFlight);
       const finalUpdatedFlights = [...state.flights];
       finalUpdatedFlights[action.payload.fid] = updatedPsgInFlight;
-      console.log(finalUpdatedFlights);
       return {
         ...state,
         flights: finalUpdatedFlights
       };
+
+      case FlightActions.ADD_SERVICE:
+        const updateFlightForService = state.flights[action.payload.index];
+        console.log(updateFlightForService);
+        const addService = {
+          ...updateFlightForService,
+          axilaryService:[...updateFlightForService.axilaryService, action.payload.service]
+        };
+        console.log(addService);
+        const serviceUpdatedFlights = [...state.flights];
+        serviceUpdatedFlights[action.payload.index] = addService;
+        console.log(serviceUpdatedFlights);
+        return {
+          ...state,
+          flights: serviceUpdatedFlights
+        };  
     default:
       return state;
   }

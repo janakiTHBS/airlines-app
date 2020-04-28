@@ -13,7 +13,7 @@
                 <td>{{pax.checkinStatus}}</td>
                 <td>{{pax.passportNumber}}</td>
                 <td>
-                    <button mat-raised-button color='primary' (click)='onCheckin(pax)'>Checkin</button>
+                    <button mat-raised-button color='primary' (click)='onCheckin(pax)'>{{isCheckedInPaxMode ? 'offload':'checkin'}}</button>
                 </td>
             </tr>
         </tbody>

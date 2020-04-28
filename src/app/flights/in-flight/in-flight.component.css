@@ -1,0 +1,45 @@
+div.seat-container {
+    margin-top: 80px;
+}
+
+.item1{
+    background-color:rgb(188, 212, 151);
+}
+
+.item2{
+    background-color:#ff7f50;
+}
+ 
+  .seat-container button {
+    background-color: #7ed2e7;
+    width: 5em;
+  }
+  
+  .seat-container .AVML {
+    background-color: yellow;
+  }
+  
+  .seat-container .NVML {
+    background-color: purple;
+  }
+  
+  .seat-container .IVML {
+    background-color: tomato;
+  }
+
+
+  mat-row:nth-child(even) {
+    background: #ffffff;
+  }
+  
+  mat-row:nth-child(odd) {
+    background: whitesmoke;
+  }
+  mat-header-cell {
+    font-size: 15px;
+    background-color:cadetblue;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

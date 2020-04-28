@@ -1,6 +1,12 @@
-.seat-map{
-    /* padding:5px,2px; */
-    text-align: left;
-    margin-left: 7%;
+.item1 {
+    background-color: rgb(181, 196, 155);
 }
 
+
+.item2 {
+    background-color: rgb(212, 175, 129);
+}
+
+.checkin-container{
+    margin-top: 60px;
+}

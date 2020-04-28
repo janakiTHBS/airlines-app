@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Flight } from './flight.model';
 import { MatTableDataSource} from '@angular/material/table';
 import { FlightService } from './flight.service';
@@ -10,15 +10,18 @@ import {map} from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as FlightActions from '../flights/store/flight.actions';
+import { SeatmapService } from './seatmap/seatmap.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-flights',
   templateUrl: './flights.component.html',
   styleUrls: ['./flights.component.css']
 })
-export class FlightsComponent implements OnInit {
+export class FlightsComponent implements OnInit,AfterViewInit,OnDestroy {
   isAdminLogged:boolean;
   isLoading:boolean;
   noResults:boolean;
+  submitted:boolean;
   @ViewChild(MatPaginator) paginator:MatPaginator;
   @ViewChild(MatSort) sort:MatSort;
   flightSearchForm: FormGroup;
@@ -42,49 +45,35 @@ export class FlightsComponent implements OnInit {
     "action"
   ];
   constructor(private flightService:FlightService,
+    private seatService:SeatmapService,
     private store:Store<fromApp.appState>,
     private formBuilder:FormBuilder,
     private router:Router,
-    private route:ActivatedRoute) { 
-      
+    private route:ActivatedRoute,
+    private datePipe:DatePipe) { 
     }
 
   ngOnInit(): void {
     this.initSearch();
-   // this.store.dispatch(new FlightActions.FetchFlights());
    this.store.select('auth').subscribe(authState=>{
-     console.log(authState.isAdmin);
      this.isAdminLogged=authState.isAdmin;
    })
-   
    this.fetchFlights();
   
-   /** this.flightService.fetchFlights().then(flights=>{
-      this.flights=flights;
-      console.log(this.flights);
-      this.listFlight=new MatTableDataSource<Flight>(this.flights);
-      this.listFlight.paginator=this.paginator;
-      this.listFlight.sort=this.sort;
-     
-    }).catch(e=>{
-      alert("no data found")
-    });**/
-    
   }
 
 
   fetchFlights(){
     this.store.select('flights').subscribe(flightState=>{
       this.listFlight=new MatTableDataSource<Flight>(flightState.flights);
-      this.listFlight.paginator=this.paginator;
-      this.listFlight.sort=this.sort;
      });
   }
+
   initSearch(){
     this.flightSearchForm=this.formBuilder.group({
-      departureStation: ['',[Validators.required]],
-      arrivalStation: ['',[Validators.required]],
-      departureDate: ['',[Validators.required]]
+      departureStation: [''],
+      arrivalStation: [''],
+      departureDate: ['']
     })
   }
 
@@ -93,14 +82,19 @@ export class FlightsComponent implements OnInit {
   }
 
   onSearch() {
+    console.log(this.submitted);
+    this.submitted=true;
+    console.log(this.submitted);
+  console.log(this.flightSearchForm.get('departureDate').value);
    let flightsList:Flight[];
     this.isLoading=true;
     this.noResults=false;
     this.flightService.fetchFlights().then(flights=>{
      flightsList=this.filterFlights(flights);
-     this.listFlight=new MatTableDataSource(flightsList);
-     this.isLoading=false;
-     this.noResults=true;
+    this.noResults=true;
+    this.isLoading=false;
+    this.listFlight=new MatTableDataSource(flightsList);
+    this.flightSearchForm.reset();  
     })
   }
 
@@ -108,13 +102,17 @@ export class FlightsComponent implements OnInit {
    const searchResults:Flight[]=[];
    const departureStation: string = this.flightSearchForm.get('departureStation').value;
    const arrivalStation: string = this.flightSearchForm.get('arrivalStation').value;
-   const departureDate: string = this.flightSearchForm.get('departureDate').value.toDateString();
-   
+   const departureDate:Date
+    = this.flightSearchForm.get('departureDate').value;
+    const formatdate=this.datePipe.transform(departureDate,'yyyy-MM-dd');
+   console.log(departureDate);
    if(flights.length>0){
      flights.forEach(flight=>{
        if(flight.departureStation.toUpperCase()===departureStation.toUpperCase()
        && flight.arrivalStation.toUpperCase()===arrivalStation.toUpperCase()
+       && flight.departureDate.toString().split('T')[0]===formatdate
        ){
+         console.log(flight.departureDate.toString().split('T')[0]===formatdate);
         searchResults.push(flight);
        }
      })
@@ -134,4 +132,16 @@ export class FlightsComponent implements OnInit {
     console.log(flightid);
     this.router.navigate([flightid],{relativeTo:this.route})
   }
+
+  ngAfterViewInit() {
+    this.listFlight.paginator=this.paginator;
+    this.listFlight.sort=this.sort;
+}
+
+ngOnDestroy(){
+  this.flightService.removeCheckedInPassengerMap();
+   this.flightService.getpaxRequiringSpecialMealsMap().clear();
+   this.flightService.clearSeatAllowment();
+   this.seatService.clearSeatAlloment();
+}
 }

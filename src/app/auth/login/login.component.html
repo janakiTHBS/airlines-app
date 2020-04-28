@@ -1,47 +1,40 @@
-<div class="main__body">
-    <div class="container">
-      <div class="login__page">
-        <div class="row loginStyle">
-          <div class="card col-md-4 col-md-offset-4">
-            <div class="login__card">
-              <div class="card-block">
-                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                    <h2 align="center">Login Form</h2>
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                            <div *ngIf="f.username.errors.required">username is required</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                            <div *ngIf="f.password.errors.required">Password is required</div>
-                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-block">Login</button>
-                    </div>
-                </form>
- 
-                <div class="form-group">
-                    <button
-                      type="button"
-                      class="btn btn-secondary btn-block"
-                      (click)="signInWithGoogle()"
-                    >
-                      <i class="fa fa-google" aria-hidden="true"></i>
-                      Login with Google
-                    </button>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <div class="container-fluid login-bg">
+    <div class="wrapper">
+      <div class="login-container">
+          <h4>Login</h4>
+              <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="dup-form-group">
+                      <mat-form-field>
+                      <input type="text" matInput formControlName="username" id="username" placeholder="username"/>
+                      <mat-error *ngIf="!registerForm.get('username').valid && registerForm.get('username').touched">
+                        {{getSignInErrMsg('USERNAME')}}</mat-error>
+                      </mat-form-field>
+                      <br>
+                    <mat-form-field>
+                      <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" placeholder="password"/>
+                      <button type="button" mat-icon-button matSuffix (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" role="button">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                     </button>
+                     <mat-error *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
+                      {{getSignInErrMsg('PASSWORD')}}</mat-error>
+                    </mat-form-field> 
+                    <br>
+                      <button  [disabled]='!registerForm.valid' mat-raised-button color="warn" >Login</button>
+                      <mat-error *ngIf="signInErr">
+                        {{getSignInErrMsg('SIGN_IN')}}</mat-error>
+                      </div>    
+                      </form>
+      </div>    
+      <div class="social-btn">
+        <span><p>or Login using</p></span>
+        <button class="gmail-icon no-focus" 
+                  mat-mini-fab [disableRipple]='true' 
+                  color="primary" 
+                  (click)='signInWithGoogle()'>g</button>
+      </div>     
+                  
+    </div>              
 </div>
 
 

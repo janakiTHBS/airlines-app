@@ -1,0 +1,46 @@
+<div class="row">
+ <div class="col-md-12">
+  <form (ngSubmit)="onSubmit(f)" #f='ngForm'>
+    <div class="in-flight-form">
+        <mat-form-field>
+            <input matInput name="passportNumber" placeholder="passport number" [(ngModel)]="passenger.passportNumber" [disabled]="true"/>
+            <mat-error>Invalid passport number</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput name="name" placeholder="name" [(ngModel)]="passenger.name" [disabled]="true"/>
+            <mat-error>This field is mandatory</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Ancillary Services</mat-label>
+            <mat-select ngModel name='ancillaries' multiple [(ngModel)]="passenger.ancillaryServicesList">
+                <mat-option *ngFor="let service of flight.axilaryService"
+                    [value]="service">{{service}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Shopping-List</mat-label>
+            <mat-select ngModel name='shop' multiple [(ngModel)]="passenger.inFlightShopReqList">
+                <mat-option *ngFor="let shopping of flight.flightInShopReqs" [value]="shopping">
+                    {{shopping}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Meal Preference</mat-label>
+            <mat-select ngModel name='mealSelect' [(ngModel)]="passenger.mealPreference">
+                <mat-option *ngFor="let meal of flight.specialMeals" [value]="meal">
+                    {{meal}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+      <div>
+        <button mat-raised-button color='warn' (click)='onClear()'>cancel</button>
+           <div class="ctrl-btn"></div>
+            <button mat-raised-button color='primary' style="background-color: #4c4cb3;color: white;">submit</button>
+        </div>
+</form>
+ </div>
+</div>
+   

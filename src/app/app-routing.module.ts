@@ -7,13 +7,17 @@ import { FlightsComponent } from './flights/flights.component';
 import { FlightresolverService } from './flights/flightresolver.service';
 import { SeatmapComponent } from './flights/seatmap/seatmap.component';
 import { CheckinComponent } from './flights/checkin/checkin.component';
+import { InFlightComponent } from './flights/in-flight/in-flight.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  {path:"",component:LoginComponent},
-  {path:"flights",component:FlightsComponent,canActivate:[AuthguardService]},
-  {path:"flights/:id",component:FlightDetailsComponent},
-  {path:"seats",component:SeatmapComponent},
-  {path:"flights/:id/checkIn",component:CheckinComponent}
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  {path:'auth', component:LoginComponent},
+  {path:'flights', component:FlightsComponent, canActivate:[AuthguardService]},
+  {path:'flights/:id', component:FlightDetailsComponent, canActivate:[AuthguardService]},
+  {path:'flights/:id/checkIn', component:CheckinComponent, canActivate:[AuthguardService]},
+  {path:'flights/:id/inflight', component:InFlightComponent, canActivate:[AuthguardService]},
+  {path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

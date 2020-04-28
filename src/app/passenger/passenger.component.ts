@@ -30,8 +30,7 @@ export class PassengerComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    console.log(this.flightId);
-    console.log(this.editMode);
+    this.passengerService.setEditmode(this.editMode);
   }
 
   onSave() {

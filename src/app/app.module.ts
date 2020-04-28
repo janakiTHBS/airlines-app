@@ -21,20 +21,27 @@ import { EffectsModule } from '@ngrx/effects';
 import { FlightEffects } from './flights/store/flight.effects';
 import * as flightActions from './flights/store/flight.actions';
 import { SeatmapComponent } from './flights/seatmap/seatmap.component';
-import { CheckinComponent } from './flights/checkin/checkin.component';
 import { SeatcheckinComponent } from './flights/seatmap/seatcheckin/seatcheckin.component';
+import { InFlightComponent } from './flights/in-flight/in-flight.component';
+import { CheckinComponent } from './flights/checkin/checkin.component';
+import { FlightCheckInComponent } from './flights/in-flight/flight-check-in/flight-check-in.component';
+import { DatePipe } from '@angular/common';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HeaderComponent,
     FlightsComponent,
+    LoginComponent,
     FlightDetailsComponent,
     PassengerComponent,
     SeatmapComponent,
     CheckinComponent,
     SeatcheckinComponent,
+    InFlightComponent,
+    FlightCheckInComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,8 +59,9 @@ import { SeatcheckinComponent } from './flights/seatmap/seatcheckin/seatcheckin.
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([FlightEffects]),
     FlexLayoutModule,
+
   ],
-  entryComponents:[PassengerComponent,SeatcheckinComponent],
+  entryComponents:[PassengerComponent,SeatcheckinComponent,FlightCheckInComponent],
   providers: [{
     provide:APP_INITIALIZER,
     useFactory:(store:Store<fromApp.appState>)=>{
@@ -63,7 +71,7 @@ import { SeatcheckinComponent } from './flights/seatmap/seatcheckin/seatcheckin.
     },
     multi:true,
     deps:[Store]
-  }],
+  },DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

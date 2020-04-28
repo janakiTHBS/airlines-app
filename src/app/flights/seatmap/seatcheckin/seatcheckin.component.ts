@@ -8,6 +8,8 @@ import { Passenger } from 'src/app/passenger/passenger.model';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../../app.reducer';
 import * as flightActions from '../../store/flight.actions';
+import { Flight } from '../../flight.model';
+import { SeatmapService } from '../seatmap.service';
 @Component({
   selector: 'app-seatcheckin',
   templateUrl: './seatcheckin.component.html',
@@ -16,11 +18,13 @@ import * as flightActions from '../../store/flight.actions';
 export class SeatcheckinComponent implements OnInit {
   flightId:number;
   seatNo:string;
+  flight:Flight;
   passengers:Passenger[];
-
+  isCheckedInPaxMode:boolean=false;
   constructor(private matDialogRef:MatDialogRef<SeatcheckinComponent>,
     @Inject(MAT_DIALOG_DATA) data:{route:ActivatedRoute,seatNumber:string},
     private flightService:FlightService,
+    private seatService:SeatmapService,
     private store:Store<fromApp.appState>) { 
      data.route.params.subscribe(params=>{
         this.flightId=params["id"];
@@ -29,26 +33,49 @@ export class SeatcheckinComponent implements OnInit {
     }
 
   ngOnInit(): void {
-   this.passengers=this.flightService.getFlight(this.flightId).passengers.filter((passenger)=>{
-     return passenger.checkinStatus===CheckinStatus.NC.toString();
-   })
+    this.flight=this.flightService.getFlight(this.flightId);
+    if(this.flightService.isNumericValue(this.seatNo) && !this.seatService.isSeatAvailable(+this.seatNo)){
+      this.isCheckedInPaxMode = true;
+      this.passengers=this.flight.passengers.filter((passenger)=>{
+        return passenger.seatNumber===this.seatNo.toString();
+      })
+    }
+    else {
+      this.passengers=this.flight.passengers.filter((passenger)=>{
+        return passenger.checkinStatus===CheckinStatus.NC.toString();
+      })
+    }
   }
 
   onCheckin(passenger){
-    let updatepassenger=this.flightService.getFlight(this.flightId).passengers.find((psgr,index)=>{
-     return passenger.passportNumber===psgr.passportNumber;
-    })
-    updatepassenger.seatNumber=this.seatNo;
-    updatepassenger.checkinStatus=CheckinStatus.AC;
-    this.flightService.assignSeat(updatepassenger,this.seatNo);
-    this.store.dispatch(new flightActions.UpdatePassenger(
-      {
+    if(!this.isCheckedInPaxMode){
+      let updatepassenger=this.flightService.getFlight(this.flightId).passengers.find((psgr,index)=>{
+        return passenger.passportNumber===psgr.passportNumber;
+       })
+       updatepassenger.seatNumber=this.seatNo;
+       updatepassenger.checkinStatus=CheckinStatus.AC;
+       this.flightService.assignSeat(updatepassenger,this.seatNo);
+       this.store.dispatch(new flightActions.UpdatePassenger(
+         {
+           fid:this.flightId-1,
+           pid:passenger.passportNumber,
+           passenger:updatepassenger
+         })); 
+       
+     } else {
+      if(passenger){
+        passenger.checkinStatus='NC';
+        this.flightService.removeSeatAllocated(passenger.seatNumber);
+        passenger.seatNumber = '-';
+       this.store.dispatch(new flightActions.UpdatePassenger({
         fid:this.flightId-1,
         pid:passenger.passportNumber,
-        passenger:updatepassenger
-      }));
-    console.log(this.flightService.getFlight(this.flightId));  
-    this.matDialogRef.close();
-  }
+        passenger:passenger
+      }))
+      }
+     }
+     this.matDialogRef.close();
+    }
+    
 
 }

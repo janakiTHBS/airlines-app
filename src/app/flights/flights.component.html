@@ -50,19 +50,16 @@
                     placeholder="From"
                     name="from"
                     formControlName="departureStation">
-                    <mat-error *ngIf='f.departureStation.touched && !f.departureStation.valid'>invalid departurestation</mat-error>
-                </mat-form-field><br/>
+                </mat-form-field>
                 <mat-form-field>
                     <input matInput  placeholder="To" name="to"
                         formControlName="arrivalStation">
-                    <mat-error *ngIf='flightSearchForm.get("arrivalStation").touched  && !flightSearchForm.get("arrivalStation").valid'>invalid arrivalstation</mat-error>
-                </mat-form-field><br/>
+                </mat-form-field>
                 <mat-form-field>
                     <input matInput [matDatepicker]="picker" placeholder="Departure Date"
                         name='departureDate' formControlName="departureDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf='flightSearchForm.get("departureDate").touched && !flightSearchForm.get("departureDate").valid'>invalid departuredate</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -70,9 +67,7 @@
     </form>
 </div>
     <div *ngIf="!isLoading && noResults">
-
       <mat-table [dataSource]="listFlight" matSort style="margin-top: 2%;">
-
         <ng-container matColumnDef="FlightNo">
           <mat-header-cell *matHeaderCellDef mat-sort-header pstyle="padding: 0px;align-items: center;justify-content: center;"> Flight No</mat-header-cell>
           <mat-cell *matCellDef="let element" style="cursor: pointer;padding: 0px;align-items: center;justify-content: center;">{{ element.flightNo}}</mat-cell>
@@ -108,7 +103,7 @@
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;"></mat-header-cell>
           <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">
-            <button class="btn btn-primary" (click)="displayUserFlightDetails(element.id)">View Details</button>
+            <button class="btn btn-primary" (click)="displayUserFlightDetails(element.id)">CheckIn</button>
           </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayFlightColumnsForUser"></mat-header-row>

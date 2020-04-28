@@ -20,6 +20,7 @@ export class FlightService {
   private seatsOccupied: Seat[] = [];
   private checkedInPassenegersMap = new Map<string, PassengerType>();
   private seatNumberWithPaxMap = new Map<string, Passenger>();
+  private paxRequiringSpecialMealsMap = new Map<string, string>();
   constructor(private http:HttpClient,
     private store :Store<fromApp.appState>,
     private seatService:SeatmapService) { 
@@ -73,7 +74,6 @@ export class FlightService {
     const isWheelChairPax: boolean = (pax.passengerType === 'WC') ? true : false;
     const isInfantAssociated: boolean = (pax.passengerType === 'INF') ? true : false;
     if (pax.checkinStatus === CheckinStatus.AC.toString()) {
-       console.log("inside if construct seat");
         if (pax.passengerType === PassengerType.INF.toString()) {
             this.getcheckedInPassengersMap().set(pax.seatNumber, PassengerType.INFANT_ASSOCIATED);
         } else if (pax.passengerType === PassengerType.WC.toString()) {
@@ -81,6 +81,8 @@ export class FlightService {
         } else {
             this.getcheckedInPassengersMap().set(pax.seatNumber, PassengerType.CHECKED_IN);
         }
+        const mealPreference: string = (pax.mealPreference) ? pax.mealPreference : '';
+        this.getpaxRequiringSpecialMealsMap().set(pax.seatNumber, mealPreference);
     }
     return new Seat(pax.seatNumber, pax.checkinStatus, isWheelChairPax, isInfantAssociated);
 }
@@ -93,6 +95,7 @@ removeSeatAllocated(seatNumber: string) {
           this.seatService.getseatsAvailable().splice(Number(seatNumber) - 1, 1, Number(seatNumber));
           this.getcheckedInPassengersMap().delete(seatNumber);
           this.getseatNumberWithPaxMap().delete(seatNumber);
+          this.getpaxRequiringSpecialMealsMap().delete(seatNumber);
           return;
       }
   });
@@ -121,4 +124,7 @@ public getSeatsOccupied(): Seat[] {
   return this.seatsOccupied;
 }
 
+public getpaxRequiringSpecialMealsMap() {
+  return this.paxRequiringSpecialMealsMap;
+}
 }

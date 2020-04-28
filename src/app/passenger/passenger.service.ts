@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Passenger } from './passenger.model';
 import { HttpClient } from '@angular/common/http';
 import * as environment from "../../environments/environment";
@@ -10,24 +10,27 @@ import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer';
 import * as flightActions from '../flights/store/flight.actions';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CheckinStatus } from '../flights/enums/CheckinStatus.enum';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PassengerService {
   flight:any;
+  editMode:boolean;
   disablePassportField:boolean;
   flights:Observable<Flight[]>;
   constructor(private http:HttpClient,
     private flightService:FlightService,
     private store:Store<fromApp.appState>,
-    private formBuilder:FormBuilder) {
+    private formBuilder:FormBuilder,
+    ) {
+    
      }  
   passengerForm:FormGroup = this.formBuilder.group({
         firstName: ['', [Validators.required,
         Validators.minLength(3), Validators.pattern('^[a-zA-z ]+$')]],
         dob: [''],
-        passportNumber: ['', [Validators.maxLength(7)]],
+        passportNumber:[''],
         address: this.formBuilder.group({
           city: ['', [Validators.pattern('^[a-zA-z]+$')]],
           state: ['', [Validators.pattern('^[a-zA-z]+$')]],
@@ -35,9 +38,12 @@ export class PassengerService {
         })
       });
   
-
+setEditmode(edit:boolean){
+  this.editMode=edit;
+}
 
 populateForm(passenger:Passenger) {
+  this.passengerForm.get('passportNumber').disable();
   console.log(passenger);
   const dateOfBirth=new Date(passenger.DOB);
   console.log(dateOfBirth);
@@ -63,8 +69,8 @@ addPassenger(passenger,fid:number){
       checkinStatus: 'NC',
       passengerType: 'GN',
       seatNumber: '-',
-      ancillaryServicesList: [],
-      mealPreference: [],
+      ancillaryServicesList:[],
+      mealPreference:'',
       inFlightShopReqList: []
     };
 

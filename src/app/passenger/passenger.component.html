@@ -15,7 +15,7 @@
         <mat-form-field>
             <mat-label>Passport Number</mat-label>
             <input formControlName='passportNumber' maxlength="7" matInput type="text" placeholder="EX:G1234PK"
-            [disabled]="editMode" name="passportNumber">
+            name="passportNumber">
             <mat-error *ngIf='passengerService.passengerForm.get("passportNumber").touched && !passengerService.passengerForm.get("passportNumber").valid'>Please
                 Enter a Valid Passport Number</mat-error>
         </mat-form-field>
@@ -46,12 +46,8 @@
         </div>
         <div>
             <button mat-raised-button color='warn' (click)='onCancel()'>Cancel</button>
-           <!--- <div class="ctrl-btn" *ngIf='!isPaxUpdate'>-->
                <div class="ctrl-btn"></div>
                 <button [disabled]='!passengerService.passengerForm.valid' mat-raised-button color='primary' (click)='onSave()' style="background-color: #4c4cb3;color: white;">{{!editMode ? 'Save':'Update'}}</button>
             </div>
-          <!---  <div class="ctrl-btn" *ngIf='isPaxUpdate'>
-                <button [disabled]='!paxForm.dirty || !paxForm.valid' mat-raised-button color='primary' (click)='onUpdate()'>Update</button>
-            </div>-->
     </div>
 </form>

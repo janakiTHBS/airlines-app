@@ -31,7 +31,7 @@ export class SeatmapComponent implements OnInit {
     const dialogConfig= new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
+    //dialogConfig.width = "60%";
     dialogConfig.data={route:this.route,seatNumber:seatNumber};
     const dialogRef = this.dialog.open(SeatcheckinComponent,dialogConfig);
   

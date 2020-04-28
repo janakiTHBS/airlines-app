@@ -21,19 +21,21 @@
         "airline": "G9",
         "departureStation": "BLR",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-04-27T23:30:00",
+        "arrivalDate": "2020-04-28T01:30:00",
         "specialMeals": [
-          "chicken Burgerrrr",
-          "burger",
-          "pizza",
-          "egg meals",
-          "ggg"
+           "AVML",
+           "IVML",
+           "NVML"
         ],
         "flightInShopReqs": [
           "Magazinesssss",
           "Chocolates"
         ],
+        "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -92,17 +94,21 @@
         "airline": "AI",
         "departureStation": "SHJ",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-04-30T10:30:00",
+        "arrivalDate": "2019-04-30T14:30:00",
         "specialMeals": [
-          "Coffee",
-          "burger",
-          "pizza"
-        ],
-        "flightInShopReqs": [
-          "Magazinesssss",
-          "chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -158,23 +164,23 @@
         "id": "3",
         "flightNo": "103",
         "airline": "J2",
-        "departureStation": "HYD",
+        "departureStation": "BLR",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-05T12:00:00",
+        "arrivalDate": "2020-05-05T18:30:00",
         "specialMeals": [
-          "Chicken masala in multigrain bread",
-          "Paneer masala in multigrain bread",
-          "pizza",
-          "burger",
-          "burger",
-          "new",
-          "vvv"
-        ],
-        "flightInShopReqs": [
-          "Magazines",
-          "Chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -232,19 +238,21 @@
         "airline": "G9",
         "departureStation": "BLR",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-05T10:30:00",
+        "arrivalDate": "2020-05-05T16:30:00",
         "specialMeals": [
-          "chicken Burger",
-          "Maggie",
-          "Coffee",
-          "yyyyy",
-          "pizza"
-        ],
-        "flightInShopReqs": [
-          "Magazines",
-          "Chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -303,18 +311,21 @@
         "airline": "AI",
         "departureStation": "SHJ",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-07T08:30:00",
+        "arrivalDate": "2020-05-07T12:00:00",
         "specialMeals": [
-          "Maggietttt",
-          "burger",
-          "egg meals",
-          "pizza"
-        ],
-        "flightInShopReqs": [
-          "chocolates",
-          "maggazines"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+          "ExcessBaggage",
+          "FoodAndBeverages"
+         ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -372,21 +383,21 @@
         "airline": "J2",
         "departureStation": "HYD",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-07T07:30:00",
+        "arrivalDate": "2020-05-07T09:00:00",
         "specialMeals": [
-          "Chicken masala in multigrain bread",
-          "Paneer masala in multigrain bread",
-          "rrr",
-          "eee",
-          "pizza",
-          "burger",
-          "new meal"
-        ],
-        "flightInShopReqs": [
-          "Magazines",
-          "Chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -444,13 +455,21 @@
         "airline": "G9",
         "departureStation": "BLR",
         "arrivalStation": "DEL",
-        "departureDate": "2020-01-08T18:40",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-11T18:40:00",
+        "arrivalDate": "2020-05-11T23:30:00",
         "specialMeals": [
-          "chicken Burger",
-          "Maggie",
-          "Coffee"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -508,18 +527,21 @@
         "airline": "AI",
         "departureStation": "SHJ",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-11T13:30:00",
+        "arrivalDate": "2020-05-11T18:30:00",
         "specialMeals": [
-          "veg-meal",
-          "Maggie",
-          "Coffee",
-          "eee"
-        ],
-        "flightInShopReqs": [
-          "Magazines",
-          "Chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -577,18 +599,21 @@
         "airline": "J2",
         "departureStation": "HYD",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-14T23:30:00",
+        "arrivalDate": "2020-05-15T01:30:00",
         "specialMeals": [
-          "Chicken masala in multigrain bread",
-          "Paneer masala in multigrain bread",
-          "pizza",
-          "burger"
-        ],
-        "flightInShopReqs": [
-          "Magazines",
-          "Chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -646,19 +671,21 @@
         "airline": "G9",
         "departureStation": "BLR",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-14T20:30:00",
+        "arrivalDate": "2020-05-14T23:30:00",
         "specialMeals": [
-          "chicken Burger",
-          "Maggie",
-          "Coffee",
-          "burger",
-          "pizza"
-        ],
-        "flightInShopReqs": [
-          "Magazines",
-          "Chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -716,17 +743,21 @@
         "airline": "AI",
         "departureStation": "SHJ",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-12T20:30:00",
+        "arrivalDate": "2020-05-12T23:30:00",
         "specialMeals": [
-          "veg-meal",
-          "Maggie",
-          "Coffee"
-        ],
-        "flightInShopReqs": [
-          "Magazines",
-          "Chocolates"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",
@@ -784,12 +815,21 @@
         "airline": "J2",
         "departureStation": "HYD",
         "arrivalStation": "DEL",
-        "departureDate": "2019-11-27T23:30:00",
-        "arrivalDate": "2019-11-27T23:30:00",
+        "departureDate": "2020-05-12T09:30:00",
+        "arrivalDate": "2020-05-12T12:00:00",
         "specialMeals": [
-          "Chicken masala in multigrain bread",
-          "Paneer masala in multigrain bread"
-        ],
+            "AVML",
+            "IVML",
+            "NVML"
+         ],
+         "flightInShopReqs": [
+           "Magazinesssss",
+           "Chocolates"
+         ],
+         "axilaryService":[
+            "ExcessBaggage",
+            "FoodAndBeverages"
+           ],
         "passengers": [
           {  
               "name": "lavanya",

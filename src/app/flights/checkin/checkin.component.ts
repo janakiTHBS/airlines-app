@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FlightService } from '../flight.service';
 import { Flight } from '../flight.model';
@@ -15,7 +15,7 @@ import * as flightActions from '../store/flight.actions';
   templateUrl: './checkin.component.html',
   styleUrls: ['./checkin.component.css']
 })
-export class CheckinComponent implements OnInit {
+export class CheckinComponent implements OnInit,OnDestroy {
   enableSeatmap:boolean;
    flightId:number;
    flight:Flight;
@@ -25,8 +25,7 @@ export class CheckinComponent implements OnInit {
     "passportNumber",
     "checkinStatus",
     "passengerType",
-    "seatNumber",
-    "action"
+    "seatNumber"
   ];
   constructor(private route:ActivatedRoute,
     private flightService:FlightService,
@@ -38,23 +37,24 @@ export class CheckinComponent implements OnInit {
    this.flightId=params["id"];
     });
     this.flight=this.flightService.getFlight(this.flightId);
+    this.flight.passengers.forEach((passenger)=>{
+      if(passenger.checkinStatus===CheckinStatus.AC.toString()){
+        if (passenger.passengerType === PassengerType.INF.toString()) {
+          this.flightService.getcheckedInPassengersMap().set(passenger.seatNumber, PassengerType.INFANT_ASSOCIATED);
+      } else if (passenger.passengerType === PassengerType.WC.toString()) {
+          this.flightService.getcheckedInPassengersMap().set(passenger.seatNumber, PassengerType.WHEEL_CHAIR);
+      } else {
+          this.flightService.getcheckedInPassengersMap().set(passenger.seatNumber, PassengerType.CHECKED_IN);
+      }
+      const mealPreference: string = (passenger.mealPreference) ? passenger.mealPreference : '';
+      this.flightService.getpaxRequiringSpecialMealsMap().set(passenger.seatNumber, mealPreference);
+      }
+     
+    })
     console.log(this.flight);
-    this.flightService.clearSeatAllowment();
-    this.seatService.clearSeatAlloment();
    this.listPassenger=new MatTableDataSource(this.flight.passengers);
   }
-
-  onOffloadPassenger(passenger){
-    if(passenger){
-      passenger.checkinStatus='NC';
-      this.flightService.removeSeatAllocated(passenger.seatNumber);
-      passenger.seatNumber = '-';
-     this.store.dispatch(new flightActions.UpdatePassenger({
-      fid:this.flightId-1,
-      pid:passenger.passportNumber,
-      passenger:passenger
-    }))
-    }
-  
+  ngOnDestroy(){
+   
   }
 }

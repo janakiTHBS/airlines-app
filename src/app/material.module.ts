@@ -16,6 +16,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 const materials = [
   MatListModule,
   MatGridListModule,
@@ -33,7 +34,8 @@ const materials = [
   MatCheckboxModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatCardModule
+  MatCardModule,
+  MatAutocompleteModule
 ];
 @NgModule({
   imports: [materials],

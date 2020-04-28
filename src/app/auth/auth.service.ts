@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from "angularfire2/auth";
-import * as firebase from "firebase/app";
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import * as environemnt from "../../environments/environment";
+import * as environemnt from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 export interface UserLogInStatus {
@@ -16,12 +16,12 @@ export interface UserLogInStatus {
   providedIn: 'root'
 })
 export class AuthService {
-  private normalUserLoggedIn:boolean=false;
-  private normalUser:any;
+  private normalUserLoggedIn=false;
+  private normalUser: any;
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   loginSucessful = new BehaviorSubject<UserLogInStatus>(null);
-  constructor(private _firebaseAuth: AngularFireAuth,private router: Router,private http:HttpClient) {
+  constructor(private _firebaseAuth: AngularFireAuth, private router: Router, private http:HttpClient) {
     this.user = this._firebaseAuth.authState;
     this.user.subscribe(user => {
       if (user) {
@@ -39,7 +39,7 @@ export class AuthService {
     if(this.normalUser!=null){
      this.normalUserLoggedIn=true;
    }
-   return this.normalUser;
+    return this.normalUser;
   }
 
   signInWithGoogle() {

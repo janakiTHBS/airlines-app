@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FlightService } from '../flight.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,18 +12,23 @@ import { PassengerService } from 'src/app/passenger/passenger.service';
 import * as fromApp from '../../app.reducer';
 import { Store } from '@ngrx/store';
 import { SeatmapService } from '../seatmap/seatmap.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as FlightActions from '../store/flight.actions';
 
 @Component({
   selector: 'app-flight-details',
   templateUrl: './flight-details.component.html',
   styleUrls: ['./flight-details.component.css']
 })
-export class FlightDetailsComponent implements OnInit {
-  
+export class FlightDetailsComponent implements OnInit,OnDestroy {
+  addService:boolean=false;
   isAdminLogged:boolean;
   flightId:string;
   flight:Flight;
   listPassenger: MatTableDataSource<Passenger>;
+  serviceForm:FormGroup=this.formBuilder.group({
+    service:this.formBuilder.control([''])
+  })
   displayPassengerColumns: string[] = [
     "name",
     "passportNumber",
@@ -38,7 +43,8 @@ export class FlightDetailsComponent implements OnInit {
     private router:Router,
     private seatService:SeatmapService,
     private passengerService:PassengerService,
-    private store:Store<fromApp.appState>) { 
+    private store:Store<fromApp.appState>,
+    private formBuilder:FormBuilder) { 
     this.route.data.subscribe((response)=>{
       console.log(response.flight);
       //this.flight=response.flight;
@@ -54,16 +60,16 @@ export class FlightDetailsComponent implements OnInit {
     this.route.params.subscribe(params=>{
       this.flightId=params["id"];
     });
-    this.flightService.removeCheckedInPassengerMap();
     this.flight=this.flightService.getFlight(+this.flightId);
     console.log(this.flight.passengers);
     this.listPassenger=new MatTableDataSource(this.flight.passengers);
+     
   }
    
   onEditPassenger(editpassenger) {
    const updatepassenger=this.flight.passengers.find((passenger,index)=>{
     return editpassenger==passenger;
-   })
+   });
    console.log(updatepassenger);
    this.passengerService.populateForm(updatepassenger);   
    const dialogConfig= new MatDialogConfig();
@@ -97,5 +103,25 @@ export class FlightDetailsComponent implements OnInit {
 
   onCheckIn(){
     this.router.navigate(["checkIn"],{relativeTo:this.route})
+  }
+
+  onInFlight(){
+    this.router.navigate(["inflight"],{relativeTo:this.route});
+  }
+
+  onSubmit(){
+    const service=this.serviceForm.get('service').value;
+    console.log(this.flightId);
+       this.store.dispatch(new FlightActions.AddService({service:service,index:+this.flightId-1}));
+       this.addService=false;
+       this.flight=this.flightService.getFlight(+this.flightId);
+     }
+
+  doFilter(value:string){
+     this.listPassenger.filter=value.trim().toLocaleLowerCase();
+  }  
+
+  ngOnDestroy(){
+   
   }
 }

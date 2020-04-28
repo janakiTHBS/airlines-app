@@ -21,3 +21,7 @@ mat-header-cell {
     background-color: #337ab7;
     color: white;
 }
+
+mat-form-field {
+  padding-right:8px;
+}

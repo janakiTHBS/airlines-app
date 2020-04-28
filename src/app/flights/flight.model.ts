@@ -10,8 +10,8 @@ export interface Flight {
     departureDate:Date,
     arrivalDate:Date,
     specialMeals:[],
-    flightInShopReq:[],
-    axilaryService:[],
+    flightInShopReqs:[],
+    axilaryService:string[],
     passengers:Passenger[];
 
 }

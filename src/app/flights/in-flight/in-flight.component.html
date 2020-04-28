@@ -1,0 +1,74 @@
+<div class="container seat-container" fxLayout>
+    <div class="item1" fxFlex>
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Welcome to {{flight.airline}} airlines</h2>
+          <h4 class="card-subtitle ">Departure Details</h4>
+          <h5 class="card-subtitle ">Departure City : {{flight.departureStation}}</h5>
+          <h5 class="card-subtitle ">Departure Time: {{flight.departureDate | date:"medium"}}</h5>
+          <h4 class="card-subtitle ">Arrival Details</h4>
+          <h5 class="card-subtitle ">Arrival City : {{flight.arrivalStation}}</h5>
+          <h5 class="card-subtitle ">Arrival Time : {{flight.arrivalDate | date:"medium"}}</h5>
+         </div>
+     </div>
+    </div>
+    <div class="item2" fxFlex>
+        <mat-grid-list cols='6' rowHeight="2:1" [gutterSize]="'2px'">
+            <mat-grid-tile *ngFor='let i of totalSeats'>
+                <button mat-raised-button [ngClass]='getColorCodes(i)' id='seat-{{i}}'>
+                    {{i}}
+                </button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>
+<div class="container">
+    <div mat="mat-elevation-z8" style="margin-top: 50px;" >
+        <mat-table [dataSource]="listPassenger" matSort>
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding: 0px;align-items: center;justify-content: center;">Name</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.name }}</mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="passportNumber">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+            style="padding: 0px;align-items: center;justify-content: center;" >Passport Number</mat-header-cell
+            >
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{ element.passportNumber }}</mat-cell>
+          </ng-container>
+       
+          <ng-container matColumnDef="axilaryService">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">Axilary Service</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{
+              element.ancillaryServicesList
+            }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="mealPreference">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">MealPreference</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{
+              element.mealPreference
+            }}</mat-cell>
+          </ng-container>
+           
+          <ng-container matColumnDef="shoppingService">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;">ShoppingService</mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">{{
+              element.inFlightShopReqList
+            }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef style="padding: 0px;align-items: center;justify-content: center;"></mat-header-cell>
+            <mat-cell *matCellDef="let element" style="padding: 0px;align-items: center;justify-content: center;">
+              <button mat-raised-button (click)="onAddServices(element)">
+                assign
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayPassengerColumns">
+          </mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayPassengerColumns"> </mat-row>
+        </mat-table>
+        </div>
+</div>
+
