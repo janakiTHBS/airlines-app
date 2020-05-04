@@ -11,29 +11,29 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  loginUserName :string;
-  userRole:string;
-  loggedIn:boolean;
-  constructor(private store:Store<fromApp.appState>,
-    private authService:AuthService,
-    private router:Router) { }
+  loginUserName: string;
+  userRole: string;
+  loggedIn: boolean;
+  constructor(private store: Store<fromApp.AppState>,
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.authService.loginSucessful.subscribe(()=>{
-      this.store.select('auth').subscribe(authuser=>{
+    this.authService.loginSucessful.subscribe(() => {
+      this.store.select('auth').subscribe(authuser => {
         console.log(authuser);
-        this.loggedIn=authuser.isLoggedIn;
-        this.loginUserName=authuser.user;
-        this.userRole=authuser.isAdmin ? 'admin' :'user';
+        this.loggedIn = authuser.isLoggedIn;
+        this.loginUserName = authuser.user;
+        this.userRole = authuser.isAdmin ? 'admin' : 'user';
       });
 
-    })
-    
+    });
+
   }
 
   onLogout(){
   this.store.dispatch(new AuthActions.Logout());
-  this.router.navigate(["/"]);
+  this.router.navigate(['/']);
   }
 
 }

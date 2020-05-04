@@ -16,34 +16,38 @@ export interface UserLogInStatus {
   providedIn: 'root'
 })
 export class AuthService {
-  private normalUserLoggedIn=false;
+  private normalUserLoggedIn = false;
   private normalUser: any;
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   loginSucessful = new BehaviorSubject<UserLogInStatus>(null);
-  constructor(private _firebaseAuth: AngularFireAuth, private router: Router, private http:HttpClient) {
-    this.user = this._firebaseAuth.authState;
+  constructor(private firebaseAuth: AngularFireAuth,
+              private router: Router,
+              private http: HttpClient) {
+    this.user = this.firebaseAuth.authState;
     this.user.subscribe(user => {
       if (user) {
         this.userDetails = user;
-        
+
       } else {
         this.userDetails = null;
       }
     });
    }
 
-   fetchUserDetails(username,password){
-    this.normalUser=this.http.get(environemnt.environment.apiUrl+"loginDetails?userName="+username+"&password="+password).toPromise();
+   fetchUserDetails(username, password){
+    this.normalUser = this.http.
+    get(environemnt.environment.apiUrl + 'loginDetails?userName=' + username + '&password=' + password)
+    .toPromise();
     console.log(this.normalUser);
-    if(this.normalUser!=null){
-     this.normalUserLoggedIn=true;
+    if (this.normalUser != null){
+     this.normalUserLoggedIn = true;
    }
     return this.normalUser;
   }
 
   signInWithGoogle() {
-    return this._firebaseAuth.auth.signInWithPopup(
+    return this.firebaseAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
     );
   }
@@ -57,6 +61,6 @@ export class AuthService {
   }
 
   logout() {
-    this._firebaseAuth.auth.signOut().then(res => this.router.navigate(["/"]));
+    this.firebaseAuth.auth.signOut().then(res => this.router.navigate(['/']));
   }
 }

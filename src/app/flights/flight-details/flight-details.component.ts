@@ -7,7 +7,7 @@ import { Passenger } from 'src/app/passenger/passenger.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PassengerComponent } from 'src/app/passenger/passenger.component';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 import { PassengerService } from 'src/app/passenger/passenger.service';
 import * as fromApp from '../../app.reducer';
 import { Store } from '@ngrx/store';
@@ -20,108 +20,103 @@ import * as FlightActions from '../store/flight.actions';
   templateUrl: './flight-details.component.html',
   styleUrls: ['./flight-details.component.css']
 })
-export class FlightDetailsComponent implements OnInit,OnDestroy {
-  addService:boolean=false;
-  isAdminLogged:boolean;
-  flightId:string;
-  flight:Flight;
+export class FlightDetailsComponent implements OnInit, OnDestroy {
+  addService = false;
+  isAdminLogged: boolean;
+  flightId: string;
+  flight: Flight;
   listPassenger: MatTableDataSource<Passenger>;
-  serviceForm:FormGroup=this.formBuilder.group({
-    service:this.formBuilder.control([''])
-  })
+  serviceForm: FormGroup = this.formBuilder.group({
+    service: this.formBuilder.control([''])
+  });
   displayPassengerColumns: string[] = [
-    "name",
-    "passportNumber",
-    "checkinStatus",
-    "passengerType",
-    "seatNumber",
-    "action"
+    'name',
+    'passportNumber',
+    'checkinStatus',
+    'passengerType',
+    'seatNumber',
+    'action'
   ];
-  constructor(private route:ActivatedRoute,
-    private matDialog:MatDialog,
-    private flightService:FlightService,
-    private router:Router,
-    private seatService:SeatmapService,
-    private passengerService:PassengerService,
-    private store:Store<fromApp.appState>,
-    private formBuilder:FormBuilder) { 
-    this.route.data.subscribe((response)=>{
-      console.log(response.flight);
-      //this.flight=response.flight;
-     // this.flightService.selectedFlight(this.flight);
-    })
+  constructor(private route: ActivatedRoute,
+              private matDialog: MatDialog,
+              private flightService: FlightService,
+              private router: Router,
+              private passengerService: PassengerService,
+              private store: Store<fromApp.AppState>,
+              private formBuilder: FormBuilder) {
+
   }
 
   ngOnInit(): void {
-    this.store.select('auth').subscribe(authState=>{
+    this.store.select('auth').subscribe(authState => {
       console.log(authState.isAdmin);
-      this.isAdminLogged=authState.isAdmin;
-    })
-    this.route.params.subscribe(params=>{
-      this.flightId=params["id"];
+      this.isAdminLogged = authState.isAdmin;
     });
-    this.flight=this.flightService.getFlight(+this.flightId);
+    this.route.params.subscribe(params => {
+      this.flightId = params.id;
+    });
+    this.flight = this.flightService.getFlight(+this.flightId);
     console.log(this.flight.passengers);
-    this.listPassenger=new MatTableDataSource(this.flight.passengers);
-     
+    this.listPassenger = new MatTableDataSource(this.flight.passengers);
+
   }
-   
-  onEditPassenger(editpassenger) {
-   const updatepassenger=this.flight.passengers.find((passenger,index)=>{
-    return editpassenger==passenger;
+
+  onEditPassenger(editpassenger: Passenger) {
+   const updatepassenger = this.flight.passengers.find((passenger, index) => {
+    return editpassenger === passenger;
    });
    console.log(updatepassenger);
-   this.passengerService.populateForm(updatepassenger);   
-   const dialogConfig= new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    dialogConfig.data={route:this.route,add:true};
-    const dialogRef=this.matDialog.open(PassengerComponent,dialogConfig);
-    dialogRef.afterClosed().subscribe(()=>{
+   this.passengerService.populateForm(updatepassenger);
+   const dialogConfig = new MatDialogConfig();
+   dialogConfig.disableClose = false;
+   dialogConfig.autoFocus = true;
+   dialogConfig.width = '60%';
+   dialogConfig.data = {route: this.route, add: true};
+   const dialogRef = this.matDialog.open(PassengerComponent, dialogConfig);
+   dialogRef.afterClosed().subscribe(() => {
       // this.router.navigate(["flights"]);
-        this.flight=this.flightService.getFlight(+this.flightId);
+        this.flight = this.flightService.getFlight(+this.flightId);
         console.log(this.flight);
-        this.listPassenger=new MatTableDataSource(this.flight.passengers);    
-     })   
+        this.listPassenger = new MatTableDataSource(this.flight.passengers);
+     });
   }
 
 
   onAddPassenger() {
-    const dialogConfig= new MatDialogConfig();
+    const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    dialogConfig.data={route:this.route,add:false}
-    const dialogRef=this.matDialog.open(PassengerComponent,dialogConfig);
-    dialogRef.afterClosed().subscribe(()=>{
+    dialogConfig.width = '60%';
+    dialogConfig.data = {route: this.route, add: false};
+    const dialogRef = this.matDialog.open(PassengerComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => {
      // this.router.navigate(["flights"]);
-       this.flight=this.flightService.getFlight(+this.flightId);
-       this.listPassenger=new MatTableDataSource(this.flight.passengers);    
-    })
+       this.flight = this.flightService.getFlight(+this.flightId);
+       this.listPassenger = new MatTableDataSource(this.flight.passengers);
+    });
   }
 
   onCheckIn(){
-    this.router.navigate(["checkIn"],{relativeTo:this.route})
+    this.router.navigate(['checkIn'], {relativeTo: this.route});
   }
 
   onInFlight(){
-    this.router.navigate(["inflight"],{relativeTo:this.route});
+    this.router.navigate(['inflight'], {relativeTo: this.route});
   }
 
   onSubmit(){
-    const service=this.serviceForm.get('service').value;
+    const service = this.serviceForm.get('service').value;
     console.log(this.flightId);
-       this.store.dispatch(new FlightActions.AddService({service:service,index:+this.flightId-1}));
-       this.addService=false;
-       this.flight=this.flightService.getFlight(+this.flightId);
+    this.store.dispatch(new FlightActions.AddService({service, index: +this.flightId - 1}));
+    this.addService = false;
+    this.flight = this.flightService.getFlight(+this.flightId);
      }
 
-  doFilter(value:string){
-     this.listPassenger.filter=value.trim().toLocaleLowerCase();
-  }  
+  doFilter(value: string){
+     this.listPassenger.filter = value.trim().toLocaleLowerCase();
+  }
 
   ngOnDestroy(){
-   
+
   }
 }

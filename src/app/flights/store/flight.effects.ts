@@ -8,13 +8,13 @@ import { Flight } from '../flight.model';
 @Injectable()
 export class FlightEffects {
 
-    constructor(private actions$:Actions,private http:HttpClient){}
+    constructor(private actions$: Actions, private http: HttpClient){}
     @Effect()
-    fetchFlights=this.actions$.pipe(ofType(FlightActions.FETCH_FLIGHTS),
-    switchMap(()=>{
-        return this.http.get<Flight[]>(environment.environment.apiUrl+"flightDetailsList").toPromise().then(flights=>{
+    fetchFlights = this.actions$.pipe(ofType(FlightActions.FETCH_FLIGHTS),
+    switchMap(() => {
+        return this.http.get<Flight[]>(environment.environment.apiUrl + 'flightDetailsList').toPromise().then(flights => {
             return new FlightActions.SetFlights(flights);
-        })
+        });
     }));
 
 }

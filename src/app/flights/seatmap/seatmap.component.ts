@@ -16,25 +16,25 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SeatmapComponent implements OnInit {
 
-  constructor(private seatmapService :SeatmapService,
-    private flightService:FlightService,
-    private dialog: MatDialog,
-    private route:ActivatedRoute) { }
+  constructor(private seatmapService: SeatmapService,
+              private flightService: FlightService,
+              private dialog: MatDialog,
+              private route: ActivatedRoute) { }
   totalSeats: number[] = this.seatmapService.getTotalSeats();
   seatsOccupied: Seat[] = null;
   availableSeats = this.seatmapService.getseatsAvailable();
   ngOnInit(): void {
-    
+
   }
 
-  onSeatClick(seatNumber :string){
-    const dialogConfig= new MatDialogConfig();
+  onSeatClick(seatNumber: string){
+    const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    //dialogConfig.width = "60%";
-    dialogConfig.data={route:this.route,seatNumber:seatNumber};
-    const dialogRef = this.dialog.open(SeatcheckinComponent,dialogConfig);
-  
+    // dialogConfig.width = "60%";
+    dialogConfig.data = {route: this.route, seatNumber};
+    const dialogRef = this.dialog.open(SeatcheckinComponent, dialogConfig);
+
   }
 
   getColorCodes(seatNumber: string) {

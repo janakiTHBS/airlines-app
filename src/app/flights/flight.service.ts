@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as environment from "../../environments/environment";
+import * as environment from '../../environments/environment';
 import { Flight } from './flight.model';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -16,26 +16,26 @@ import { SeatmapService } from './seatmap/seatmap.service';
   providedIn: 'root'
 })
 export class FlightService {
-  flight:Flight;
+  flight: Flight;
   private seatsOccupied: Seat[] = [];
   private checkedInPassenegersMap = new Map<string, PassengerType>();
   private seatNumberWithPaxMap = new Map<string, Passenger>();
   private paxRequiringSpecialMealsMap = new Map<string, string>();
-  constructor(private http:HttpClient,
-    private store :Store<fromApp.appState>,
-    private seatService:SeatmapService) { 
-    
+  constructor(private http: HttpClient,
+              private store: Store<fromApp.AppState>,
+              private seatService: SeatmapService) {
+
   }
 
   fetchFlights() {
-  return this.http.get<Flight[]>(environment.environment.apiUrl+"flightDetailsList").toPromise();
+  return this.http.get<Flight[]>(environment.environment.apiUrl + 'flightDetailsList').toPromise();
   }
 
-  getFlight(id:number){
-    this.store.select('flights').subscribe(flightState=>{
-       this.flight=flightState.flights.find((flight,index)=>{
-        return id==flight.id;
-      })
+  getFlight(id: number){
+    this.store.select('flights').subscribe(flightState => {
+       this.flight = flightState.flights.find((flight, index) => {
+        return id.toString() === flight.id.toString();
+      });
     });
     console.log(this.flight);
     return this.flight;
@@ -45,20 +45,20 @@ export class FlightService {
     return this.flight;
   }
 
-  assignSeat(passenger:Passenger,seatNo:string){
+  assignSeat(passenger: Passenger, seatNo: string){
     const occupiedSeatsSatus = this.getSeatsOccupied();
     const totalSeats = this.seatService.getTotalSeats();
     if (this.isNumericValue(passenger.seatNumber) && this.seatService.isSeatAvailable(Number(passenger.seatNumber))) {
-    passenger.seatNumber=seatNo.toString();
+    passenger.seatNumber = seatNo.toString();
     const seatStatus: Seat = this.constructSeatStatus(passenger);
     occupiedSeatsSatus.push(seatStatus);
     this.seatService.getseatsAvailable().splice(Number(passenger.seatNumber) - 1, 1, -1);
-  } 
+  }
     else {
       const seats: string[] = occupiedSeatsSatus.map(seat => seat.seatNumber);
       for (const availableSeat of totalSeats) {
           if (!(seats.includes(availableSeat.toString()))) {
-              passenger.seatNumber =availableSeat.toString();
+              passenger.seatNumber = availableSeat.toString();
               const seatStatus: Seat = this.constructSeatStatus(passenger);
               console.log(seatStatus);
               occupiedSeatsSatus.push(seatStatus);

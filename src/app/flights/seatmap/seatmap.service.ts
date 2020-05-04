@@ -31,6 +31,6 @@ export class SeatmapService {
   }
 
   public clearSeatAlloment(){
-    this.seatsAvailable=[...Array(37).keys()].slice(1);
+    this.seatsAvailable = [...Array(37).keys()].slice(1);
   }
 }

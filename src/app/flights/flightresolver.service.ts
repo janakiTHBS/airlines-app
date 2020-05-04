@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class FlightresolverService  implements Resolve<Flight>{
 
-  constructor(private flightService:FlightService) { }
+  constructor(private flightService: FlightService) { }
 
-  resolve(route:ActivatedRouteSnapshot,state:RouterStateSnapshot):Observable<Flight> | Promise<Flight> | Flight {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Flight> | Promise<Flight> | Flight {
   return this.flightService.getFlight(+route.paramMap.get('id'));
   }
 }

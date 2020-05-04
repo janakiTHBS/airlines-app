@@ -12,16 +12,18 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  {path:'auth', component:LoginComponent},
-  {path:'flights', component:FlightsComponent, canActivate:[AuthguardService]},
-  {path:'flights/:id', component:FlightDetailsComponent, canActivate:[AuthguardService]},
-  {path:'flights/:id/checkIn', component:CheckinComponent, canActivate:[AuthguardService]},
-  {path:'flights/:id/inflight', component:InFlightComponent, canActivate:[AuthguardService]},
+  {path: 'auth', component: LoginComponent},
+  {path: 'flights', component: FlightsComponent, canActivate: [AuthguardService]},
+  {path: 'flights/:id', component: FlightDetailsComponent, canActivate: [AuthguardService]},
+  {path: 'flights/:id/checkIn', component: CheckinComponent, canActivate: [AuthguardService]},
+  {path: 'flights/:id/inflight', component: InFlightComponent, canActivate: [AuthguardService]},
   {path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: 'enabled'
+})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

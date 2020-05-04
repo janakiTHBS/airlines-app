@@ -15,18 +15,18 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./passenger.component.css']
 })
 export class PassengerComponent implements OnInit {
-  flightId:number;
-  editFlight:Flight;
-  editMode:boolean;
-  constructor(private formBuilder:FormBuilder,
-    private matDialogRef:MatDialogRef<PassengerComponent>,
-    public passengerService:PassengerService,
-    @Inject(MAT_DIALOG_DATA) data:{route:ActivatedRoute,add:boolean},
-    private store:Store<fromApp.appState>) {
-      data.route.params.subscribe(params=>{
-        this.flightId=params["id"];
-      })
-      this.editMode=data.add;
+  flightId: number;
+  editFlight: Flight;
+  editMode: boolean;
+  constructor(
+              private matDialogRef: MatDialogRef<PassengerComponent>,
+              public passengerService: PassengerService,
+              @Inject(MAT_DIALOG_DATA) data: {route: ActivatedRoute, add: boolean},
+              ) {
+      data.route.params.subscribe(params => {
+        this.flightId = params.id;
+      });
+      this.editMode = data.add;
      }
 
   ngOnInit(): void {
@@ -34,12 +34,12 @@ export class PassengerComponent implements OnInit {
   }
 
   onSave() {
-    const passenger=this.passengerService.passengerForm.value;  
-    if(!this.editMode){
-      this.passengerService.addPassenger(passenger,this.flightId) 
+    const passenger = this.passengerService.passengerForm.getRawValue();
+    if (!this.editMode){
+      this.passengerService.addPassenger(passenger, this.flightId);
     }
     else {
-      this.passengerService.updatePassenger(this.flightId,passenger);
+      this.passengerService.updatePassenger(this.flightId, passenger);
     }
     this.passengerService.passengerForm.reset();
     this.matDialogRef.close();
@@ -49,5 +49,5 @@ export class PassengerComponent implements OnInit {
     this.matDialogRef.close();
   }
 
-  
+
 }

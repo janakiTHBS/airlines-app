@@ -6,7 +6,7 @@ export class Passenger {
     seatNumber: string;
     address: Address;
     DOB: string;
-    ancillaryServicesList:string[];
+    ancillaryServicesList: string[];
     mealPreference: string;
     inFlightShopReqList: string[];
 }
@@ -15,9 +15,9 @@ export class Address {
     state: string;
     postalCode: string;
 
-    constructor(city:string,state:string,postalCode:string){
-        this.city=city;
-        this.state=state;
-        this.postalCode=postalCode;
+    constructor(city: string, state: string, postalCode: string){
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
     }
 }

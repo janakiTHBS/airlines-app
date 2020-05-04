@@ -1,12 +1,12 @@
-import { Flight } from "../flight.model";
-import * as FlightActions from "../store/flight.actions";
+import { Flight } from '../flight.model';
+import * as FlightActions from '../store/flight.actions';
 import { Passenger } from 'src/app/passenger/passenger.model';
 export interface State {
   flights: Flight[];
 }
 
 const initialState: State = {
-  flights:null, 
+  flights: null,
 };
 export function FlightState(
   state = initialState,
@@ -14,29 +14,29 @@ export function FlightState(
 ) {
   switch (action.type) {
      case FlightActions.SET_FLIGHTS:
-       console.log(action.payload)
+       console.log(action.payload);
        return {
          ...state,
-         flights:[...action.payload]
+         flights: [...action.payload]
        };
      case FlightActions.ADD_PASSENGER:
-       const flight=state.flights[action.payload.index];
-       const updatedFlight={
+       const flight = state.flights[action.payload.index];
+       const updatedFlight = {
          ...flight,
-         passengers:[...flight.passengers,action.payload.passenger]
-       }
-       const updatedFlights=[...state.flights];
-       updatedFlights[0]=updatedFlight;
+         passengers: [...flight.passengers, action.payload.passenger]
+       };
+       const updatedFlights = [...state.flights];
+       updatedFlights[0] = updatedFlight;
        return {
         ...state,
-        flights:updatedFlights
+        flights: updatedFlights
        };
-       
+
       case FlightActions.UPDATE_PASSENGER:
-      let passengers: Passenger[] = [];
+      const passengers: Passenger[] = [];
       const updateFlight = state.flights[action.payload.fid];
       state.flights[action.payload.fid].passengers.forEach(passenger => {
-        if (passenger.passportNumber == action.payload.pid) {
+        if (passenger.passportNumber === action.payload.pid) {
           passengers.push(action.payload.passenger);
         } else {
           passengers.push(passenger);
@@ -58,7 +58,7 @@ export function FlightState(
         console.log(updateFlightForService);
         const addService = {
           ...updateFlightForService,
-          axilaryService:[...updateFlightForService.axilaryService, action.payload.service]
+          axilaryService: [...updateFlightForService.axilaryService, action.payload.service]
         };
         console.log(addService);
         const serviceUpdatedFlights = [...state.flights];
@@ -67,7 +67,7 @@ export function FlightState(
         return {
           ...state,
           flights: serviceUpdatedFlights
-        };  
+        };
     default:
       return state;
   }

@@ -6,7 +6,11 @@ describe('PassengerService', () => {
   let service: PassengerService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {provide: PassengerService, useClass: PassengerServiceStub}
+      ]
+    });
     service = TestBed.inject(PassengerService);
   });
 
@@ -14,3 +18,7 @@ describe('PassengerService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+class PassengerServiceStub {
+
+}

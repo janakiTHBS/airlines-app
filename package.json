@@ -3,12 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "dev": "webpack",
     "start": "ng serve",
     "build": "ng build",
     "json-server": "json-server --watch db.json",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "dev:ssr": "ng run airlines-app:serve-ssr",
+    "serve:ssr": "node dist/airlines-app/server/main.js",
+    "build:ssr": "ng build --prod && ng run airlines-app:server:production",
+    "prerender": "ng run airlines-app:prerender"
   },
   "private": true,
   "dependencies": {
@@ -22,16 +27,21 @@
     "@angular/material": "^9.2.1",
     "@angular/platform-browser": "~9.1.0",
     "@angular/platform-browser-dynamic": "~9.1.0",
+    "@angular/platform-server": "~9.1.0",
     "@angular/router": "~9.1.0",
     "@ngrx/effects": "^8.6.0",
     "@ngrx/store": "^8.6.0",
+    "@nguniversal/express-engine": "^9.1.0",
     "angularfire2": "^5.4.2",
     "bootstrap": "^3.3.7",
+    "express": "^4.15.2",
     "firebase": "^7.11.0",
     "json-server": "^0.16.1",
     "rxjs": "^6.5.4",
     "rxjs-compat": "^6.5.5",
     "tslib": "^1.10.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -39,6 +49,8 @@
     "@angular/cli": "~9.1.0",
     "@angular/compiler-cli": "~9.1.0",
     "@angular/language-service": "~9.1.0",
+    "@nguniversal/builders": "^9.1.0",
+    "@types/express": "^4.17.0",
     "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
@@ -54,5 +66,17 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janakiTHBS/airlines-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/janakiTHBS/airlines-app/issues"
+  },
+  "homepage": "https://github.com/janakiTHBS/airlines-app#readme"
 }
