@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "webpack",
     "start": "ng serve",
     "build": "ng build",
     "json-server": "json-server --watch db.json",
@@ -31,7 +30,6 @@
     "@angular/router": "~9.1.0",
     "@ngrx/effects": "^8.6.0",
     "@ngrx/store": "^8.6.0",
-    "@nguniversal/express-engine": "^9.1.0",
     "angularfire2": "^5.4.2",
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
@@ -40,8 +38,6 @@
     "rxjs": "^6.5.4",
     "rxjs-compat": "^6.5.5",
     "tslib": "^1.10.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
