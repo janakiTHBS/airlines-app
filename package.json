@@ -8,11 +8,7 @@
     "json-server": "json-server --watch db.json",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "dev:ssr": "ng run airlines-app:serve-ssr",
-    "serve:ssr": "node dist/airlines-app/server/main.js",
-    "build:ssr": "ng build --prod && ng run airlines-app:server:production",
-    "prerender": "ng run airlines-app:prerender"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
